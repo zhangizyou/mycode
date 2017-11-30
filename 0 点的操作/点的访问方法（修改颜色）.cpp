@@ -12,13 +12,13 @@ int main() {
 
 	//数据处理--修改点云颜色
 	//方法1：遍历
-	for (size_t i = 6000; i < 8000; i++)
+	for (size_t i = 0; i < 2500; i++)
 	{
-		cloud->at(i).rgba =  0xff0000;  //RGB-红色0XFF0000
+		cloud->at(i).rgba = 0xff0000;  //RGB-红色0XFF0000
 	}
 	//方法2：迭代
 	pcl::PointCloud<pcl::PointXYZRGBA>::iterator it, end;
-	for (it = cloud->begin()+10000, end = cloud->end(); it != end; ++it)
+	for (it = cloud->begin() + 10000, end = cloud->end(); it != end; ++it)
 	{
 		(*it).rgba = 0x0000ff;
 	}
@@ -36,7 +36,3 @@ int main() {
 
 	return 0;
 }
-
-
-
-
