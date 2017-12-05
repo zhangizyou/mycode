@@ -28,10 +28,11 @@ int main(int argc, char** argv)
 		px = cloud->points[i].x;
 		py = cloud->points[i].y;
 		pz = cloud->points[i].z;
-		if (px<0.02 || py<0.02 || pz<0.02) indexs.push_back(i); //筛选边界点
+		if (px<0.1 || py<0.1 || pz<0.1) indexs.push_back(i); //筛选边界点
 	}
 	//点云批量复制
 	pcl::copyPointCloud(*cloud, indexs, *cloudOut);//in --index---out
+	
 	//着色输出显示
 	pcl::visualization::PCLVisualizer viewer("mainwindow");
 	pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> model_cloud_color_handler(cloud, 0, 200, 0);

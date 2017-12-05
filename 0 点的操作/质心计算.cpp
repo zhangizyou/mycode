@@ -15,7 +15,7 @@ int main(int argc, char** argv)
 	cloud->width = 20000;
 	cloud->height = 1;
 	cloud->points.resize(cloud->width * cloud->height);
-	//随机设置点云里点的坐标
+	//设置随机点云数据
 	for (size_t i = 0; i < cloud->points.size(); ++i)
 	{
 		cloud->points[i].x = rand() / (RAND_MAX + 1.0f);
@@ -33,13 +33,14 @@ int main(int argc, char** argv)
 		if (px<0.02 || py<0.02) indexs.push_back(i); //筛选边界点
 	}
 
+	//点云拷贝
 	pcl::copyPointCloud(*cloud, indexs, *cloudOut);
 
 	//创建存储点云质心的对象
 	Eigen::Vector4f centroid1, centroid2;
 	pcl::compute3DCentroid(*cloud, centroid1);	//计算质心
 	pcl::compute3DCentroid(*cloudOut, centroid2);	//计算质心
-	std::cout << "点云质心为("
+	std::cout << "原始点云质心为("
 		<< centroid1[0] << ", "
 		<< centroid1[1] << ", "
 		<< centroid1[2] << ")." << std::endl;

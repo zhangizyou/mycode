@@ -5,7 +5,6 @@
 #include <pcl/visualization/pcl_visualizer.h>
 //定义点云---------------------------------------------------------------
 pcl::PointCloud<pcl::PointXYZ>::Ptr 	basic_cloud_ptr(new pcl::PointCloud<pcl::PointXYZ>);
-pcl::PointCloud<pcl::PointXYZRGB>::Ptr 	point_cloud_ptr(new pcl::PointCloud<pcl::PointXYZRGB>);
 
 void creat_pcd(void);
 //主函数--------------------------------------------------------------------------
@@ -44,20 +43,11 @@ void creat_pcd(void)
 			point1.y = sinf(pcl::deg2rad(angle));
 			point1.z = z;
 			basic_cloud_ptr->points.push_back(point1);
-
-			pcl::PointXYZRGB point2;//有色点云
-			point2.x = point1.x;
-			point2.y = point1.y;
-			point2.z = point1.z;
-			uint32_t rgb = (static_cast<uint32_t>(r) << 16 | static_cast<uint32_t>(g) << 8 | static_cast<uint32_t>(b));
-			point2.rgb = *reinterpret_cast<float*>(&rgb);
-			point_cloud_ptr->points.push_back(point2);
 		}
-		r = (1 + z) * 255 / 2; //改变颜色信息
+
 
 	}
 	basic_cloud_ptr->width = (int)basic_cloud_ptr->points.size();
 	basic_cloud_ptr->height = 1;
-	point_cloud_ptr->width = (int)point_cloud_ptr->points.size();
-	point_cloud_ptr->height = 1;
+
 }

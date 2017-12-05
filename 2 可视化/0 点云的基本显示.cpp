@@ -5,7 +5,6 @@
 #include <pcl/visualization/pcl_visualizer.h>
 //定义点云---------------------------------------------------------------
 pcl::PointCloud<pcl::PointXYZ>::Ptr 	basic_cloud_ptr(new pcl::PointCloud<pcl::PointXYZ>);
-pcl::PointCloud<pcl::PointXYZRGB>::Ptr 	point_cloud_ptr(new pcl::PointCloud<pcl::PointXYZRGB>);
 
 void creat_pcd(void);
 //主函数--------------------------------------------------------------------------
@@ -16,7 +15,7 @@ main()
 	//创建视窗对象并将它设置为boost::shared_ptr智能共享指针，保证指针全局使用
 	boost::shared_ptr<pcl::visualization::PCLVisualizer> viewer(new pcl::visualization::PCLVisualizer("3D Viewer"));
 	viewer->setBackgroundColor(0, 0, 0);
-	viewer->addPointCloud<pcl::PointXYZ>(basic_cloud_ptr, "sample cloud"); 
+	viewer->addPointCloud<pcl::PointXYZ>(basic_cloud_ptr, "sample cloud");
 	viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, "sample cloud");
 	viewer->addCoordinateSystem(1.0);//添加坐标轴
 	viewer->initCameraParameters();  //添加视角
@@ -25,7 +24,6 @@ main()
 	{
 		viewer->spinOnce(100);
 	}
-
 	return (0);
 }
 
@@ -43,20 +41,9 @@ void creat_pcd(void)
 			point1.y = sinf(pcl::deg2rad(angle));
 			point1.z = z;
 			basic_cloud_ptr->points.push_back(point1);
-
-			pcl::PointXYZRGB point2;//有色点云
-			point2.x = point1.x;
-			point2.y = point1.y;
-			point2.z = point1.z;
-			uint32_t rgb = (static_cast<uint32_t>(r) << 16 | static_cast<uint32_t>(g) << 8 | static_cast<uint32_t>(b));
-			point2.rgb = *reinterpret_cast<float*>(&rgb);
-			point_cloud_ptr->points.push_back(point2);
 		}
-		r = (1 + z) * 255 / 2; //改变颜色信息
-
 	}
 	basic_cloud_ptr->width = (int)basic_cloud_ptr->points.size();
 	basic_cloud_ptr->height = 1;
-	point_cloud_ptr->width = (int)point_cloud_ptr->points.size();
-	point_cloud_ptr->height = 1;
+
 }
