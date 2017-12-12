@@ -13,9 +13,9 @@
 std::string filename ="e:\\pcl\\pcdfile\\room_scan1.pcd";
 float angular_resolution_x = 0.5f,angular_resolution_y = angular_resolution_x;
 pcl::RangeImage::CoordinateFrame coordinate_frame = pcl::RangeImage::CAMERA_FRAME;
-bool live_update = false;
+bool live_update = true;
 
-
+//设置深度图像的视点参数
 void
 setViewerPose(pcl::visualization::PCLVisualizer& viewer, const Eigen::Affine3f& viewer_pose)
 {
@@ -32,7 +32,6 @@ int
 main(int argc, char** argv)
 {
 	// -----Parse Command Line Arguments-----
-	live_update = true;
 	int tmp_coordinate_frame;
 	coordinate_frame = pcl::RangeImage::CoordinateFrame(tmp_coordinate_frame);
 	angular_resolution_x = pcl::deg2rad(angular_resolution_x);
@@ -43,7 +42,7 @@ main(int argc, char** argv)
 	// ------------------------------------------------------------------
 	pcl::PointCloud<pcl::PointXYZ>::Ptr point_cloud_ptr(new pcl::PointCloud<pcl::PointXYZ>);
 	pcl::PointCloud<pcl::PointXYZ>& point_cloud = *point_cloud_ptr;
-	Eigen::Affine3f scene_sensor_pose(Eigen::Affine3f::Identity());
+	Eigen::Affine3f scene_sensor_pose(Eigen::Affine3f::Identity()); //设置传感器位置
 
 	if (pcl::io::loadPCDFile(filename, point_cloud) == -1)
 	{
